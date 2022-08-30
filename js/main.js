@@ -1,4 +1,8 @@
 (() => {
+    let yOffset = 0
+    let prevScrollHeight = 0
+    let currentScene = 0
+
     const sceneInfo = [
         {
             // 0
@@ -45,5 +49,21 @@
         console.log(sceneInfo)
     }
     window.addEventListener('resize', setLayout)
+    function scrollLoop() {
+        prevScrollHeight = 0
+        for (let i = 0; i < currentScene; i++) {
+            prevScrollHeight += sceneInfo[i].scrollHeight
+        }
+        if (yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) currentScene++
+        if (yOffset < prevScrollHeight) {
+            if (currentScene === 0) return
+            currentScene--
+        }
+        console.log(currentScene)
+    }
+    window.addEventListener('scroll', () => {
+        yOffset = window.pageYOffset
+        scrollLoop()
+    })
     setLayout()
 })()
