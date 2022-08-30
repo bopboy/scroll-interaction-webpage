@@ -16,12 +16,16 @@ p {
     line-height: 1.6;
 }
 
+/* 메뉴 */
+
 .global-nav {
     height: 44px;
+    padding: 0 1rem;
 }
 
 .local-nav {
     height: 52px;
+    padding: 0 1rem;
     border-bottom: 1px solid #ddd;
 }
 
@@ -56,3 +60,47 @@ a {
 .local-nav-links a {
     font-size: 0.8rem;
 }
+
+/* 섹션 공통 */
+
+.scroll-section {
+    padding-top: 50vh;
+}
+
+.main-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 0;
+    height: 3em;
+    font-size: 2.5rem;
+    /* background: rgba(0, 0, 0, 0.3) */
+}
+
+.main-message p {
+    line-height: 1.2;
+    font-weight: bold;
+    text-align: center;
+}
+
+.description {
+    padding: 0 1rem;
+    font-size: 1.2rem;
+    color: #888;
+}
+
+.description strong {
+    float: left;
+    margin-right: 0.2em;
+    font-size: 3rem;
+    color: rgb(29, 29, 31);
+}
+
+/* 섹션 1 */
+
+#scroll-section-0 h1 {
+    font-size: 4rem;
+    text-align: center;
+}
+
+/* 섹션 2 */
