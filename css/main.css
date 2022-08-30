@@ -67,6 +67,13 @@ a {
     padding-top: 50vh;
 }
 
+/* 섹션 1 */
+
+#scroll-section-0 h1 {
+    font-size: 4rem;
+    text-align: center;
+}
+
 .main-message {
     display: flex;
     align-items: center;
@@ -83,7 +90,11 @@ a {
     text-align: center;
 }
 
+/* 섹션 2 */
+
 .description {
+    max-width: 1000px;
+    margin: 0 auto;
     padding: 0 1rem;
     font-size: 1.2rem;
     color: #888;
@@ -96,11 +107,97 @@ a {
     color: rgb(29, 29, 31);
 }
 
-/* 섹션 1 */
+/* 섹션 3 */
 
-#scroll-section-0 h1 {
-    font-size: 4rem;
-    text-align: center;
+.main-message small {
+    display: block;
+    margin-bottom: 0.5em;
+    font-size: 1.2rem;
 }
 
-/* 섹션 2 */
+#scroll-section-2 .main-message {
+    font-size: 3.5rem;
+}
+
+.desc-message {
+    width: 50%;
+    font-weight: bold;
+}
+
+.pin {
+    width: 1px;
+    height: 100px;
+    background: rgb(29, 29, 31);
+}
+
+/* 섹션 4 */
+
+.mid-message {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    font-size: 2rem;
+    color: #888;
+}
+
+.mid-message strong {
+    color: rgb(29, 29, 31);
+}
+
+.canvas-caption {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    font-size: 1.2rem;
+    color: #888;
+}
+
+/* footer */
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 7rem;
+    color: white;
+    background: darkorange;
+}
+
+/* 데스크톱 미디어 쿼리 */
+
+@media (min-width:1024px) {
+    #scroll-section-0 h1 {
+        font-size: 9vw;
+    }
+
+    .main-message {
+        font-size: 4vw;
+    }
+
+    .description {
+        font-size: 2rem;
+    }
+
+    .description strong {
+        font-size: 6rem;
+    }
+
+    #scroll-section-2 .main-message {
+        font-size: 6vw;
+    }
+
+    .main-message small {
+        font-size: 1.5vw;
+    }
+
+    .desc-message {
+        width: 20%;
+    }
+
+    .mid-message {
+        font-size: 4vw;
+    }
+
+    .canvas-caption {
+        font-size: 2rem;
+    }
+}
