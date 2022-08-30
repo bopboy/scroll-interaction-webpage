@@ -67,21 +67,6 @@ a {
     padding-top: 50vh;
 }
 
-.sticky-elem {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-
-#show-scene-0 #scroll-section-0 .sticky-elem,
-#show-scene-1 #scroll-section-1 .sticky-elem,
-#show-scene-2 #scroll-section-2 .sticky-elem,
-#show-scene-3 #scroll-section-3 .sticky-elem {
-    display: block;
-}
-
 /* 섹션 1 */
 
 #scroll-section-0 h1 {
@@ -165,6 +150,23 @@ a {
     padding: 0 1rem;
     font-size: 1.2rem;
     color: #888;
+}
+
+/* sticky  */
+
+.sticky-elem {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#show-scene-0 #scroll-section-0 .sticky-elem,
+#show-scene-1 #scroll-section-1 .sticky-elem,
+#show-scene-2 #scroll-section-2 .sticky-elem,
+#show-scene-3 #scroll-section-3 .sticky-elem {
+    display: block;
 }
 
 /* footer */
