@@ -2,6 +2,7 @@
     let yOffset = 0
     let prevScrollHeight = 0
     let currentScene = 0
+    let enterNewScene = false
 
     const sceneInfo = [
         {
@@ -74,41 +75,39 @@
         const objs = sceneInfo[currentScene].objs
         const values = sceneInfo[currentScene].values
         const currentYOffset = yOffset - prevScrollHeight
-        // console.log(currentScene, currentYOffset)
 
         switch (currentScene) {
             case 0:
-                // console.log('0 play')
                 let message_opacity_in = calcValues(values.messageA_opacity, currentYOffset)
                 console.log(message_opacity_in)
                 objs.messageA.style.opacity = message_opacity_in
                 break
             case 1:
-                // console.log('1 play')
                 break
             case 2:
-                // console.log('2 play')
                 break
             case 3:
-                // console.log('3 play')
                 break
         }
     }
     function scrollLoop() {
+        enterNewScene = false
         prevScrollHeight = 0
         for (let i = 0; i < currentScene; i++) {
             prevScrollHeight += sceneInfo[i].scrollHeight
         }
         if (yOffset > prevScrollHeight + sceneInfo[currentScene].scrollHeight) {
+            enterNewScene = true
             currentScene++
             document.body.setAttribute('id', `show-scene-${currentScene}`)
         }
         if (yOffset < prevScrollHeight) {
+            enterNewScene = true
             if (currentScene === 0) return
             currentScene--
             document.body.setAttribute('id', `show-scene-${currentScene}`)
         }
-        // document.body.setAttribute('id', `show-scene-${currentScene}`)
+        if (enterNewScene) return
         playAnimation()
     }
     window.addEventListener('scroll', () => {
