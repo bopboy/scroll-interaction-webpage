@@ -12,9 +12,9 @@
             objs: {
                 container: document.querySelector('#scroll-section-0'),
                 messageA: document.querySelector('#scroll-section-0 .main-message.a'),
-                messageA: document.querySelector('#scroll-section-0 .main-message.b'),
-                messageA: document.querySelector('#scroll-section-0 .main-message.c'),
-                messageA: document.querySelector('#scroll-section-0 .main-message.d'),
+                messageB: document.querySelector('#scroll-section-0 .main-message.b'),
+                messageC: document.querySelector('#scroll-section-0 .main-message.c'),
+                messageD: document.querySelector('#scroll-section-0 .main-message.d'),
             },
             values: {
                 messageA_opacity: [0, 1]
@@ -65,7 +65,10 @@
         document.body.setAttribute('id', `show-scene-${currentScene}`)
     }
     function calcValues(values, currentYOffset) {
-        return currentYOffset
+        let rv
+        let scrollRatio = currentYOffset / sceneInfo[currentScene].scrollHeight
+        rv = scrollRatio * (values[1] - values[0]) + values[0]
+        return rv
     }
     function playAnimation() {
         const objs = sceneInfo[currentScene].objs
@@ -76,9 +79,9 @@
         switch (currentScene) {
             case 0:
                 // console.log('0 play')
-                let messageA_opacity_0 = values.messageA_opacity[0]
-                let messageA_opacity_1 = values.messageA_opacity[1]
-                console.log(calcValues(values.messageA_opacity, currentYOffset))
+                let message_opacity_in = calcValues(values.messageA_opacity, currentYOffset)
+                console.log(message_opacity_in)
+                objs.messageA.style.opacity = message_opacity_in
                 break
             case 1:
                 // console.log('1 play')
