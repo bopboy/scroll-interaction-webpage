@@ -160,6 +160,10 @@
 
         switch (currentScene) {
             case 0:
+                let sequence = Math.round(calcValues(values.imageSequence, currentYOffset))
+                objs.context.drawImage(objs.videoImages[sequence], 0, 0)
+                console.log(sequence
+                )
                 if (scrollRatio <= 0.22) {
                     objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset)
                     objs.messageA.style.transform = `translateY(${calcValues(values.messageA_translateY_in, currentYOffset)}%)`
