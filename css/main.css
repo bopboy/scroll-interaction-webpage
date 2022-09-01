@@ -75,7 +75,7 @@ a {
 
 .scroll-section {
     padding-top: 50vh;
-    border: 3px solid red;
+    /* border: 3px solid red; */
 }
 
 /* 섹션 1 */
@@ -193,7 +193,14 @@ a {
 
 .sticky-elem-canvas {
     top: 0;
-    background: #ccc;
+    height: 100%;
+    /* background: #ccc; */
+}
+
+.sticky-elem-canvas canvas {
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
 
 /* footer */

@@ -128,6 +128,9 @@
             }
         }
         document.body.setAttribute('id', `show-scene-${currentScene}`)
+
+        const heightRatio = window.innerHeight / 1080
+        sceneInfo[0].objs.canvas.style.transform = `translate3d(-50%, -50%, 0) scale(${heightRatio})`
     }
     function calcValues(values, currentYOffset) {
         let rv
@@ -162,8 +165,7 @@
             case 0:
                 let sequence = Math.round(calcValues(values.imageSequence, currentYOffset))
                 objs.context.drawImage(objs.videoImages[sequence], 0, 0)
-                console.log(sequence
-                )
+                console.log(sequence)
                 if (scrollRatio <= 0.22) {
                     objs.messageA.style.opacity = calcValues(values.messageA_opacity_in, currentYOffset)
                     objs.messageA.style.transform = `translateY(${calcValues(values.messageA_translateY_in, currentYOffset)}%)`
