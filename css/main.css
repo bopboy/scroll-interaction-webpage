@@ -182,6 +182,11 @@ a {
     /* background: blue; */
 }
 
+.image-blend-canvas.sticky {
+    position: fixed;
+    top: 0;
+}
+
 .canvas-caption {
     max-width: 1000px;
     margin: 0 auto;
