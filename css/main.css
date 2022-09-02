@@ -159,6 +159,12 @@ a {
 
 /* 섹션 4 */
 
+#scroll-section-3 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .mid-message {
     max-width: 1000px;
     margin: 0 auto;
@@ -169,6 +175,10 @@ a {
 
 .mid-message strong {
     color: rgb(29, 29, 31);
+}
+
+.image-blend-canvas {
+    background: blue;
 }
 
 .canvas-caption {
