@@ -108,6 +108,7 @@
             values: {
                 rect1X: [0, 0, { start: 0, end: 0 }],
                 rect2X: [0, 0, { start: 0, end: 0 }],
+                imageBlendY: [0, 0, { start: 0, end: 0 }],
                 rectStartY: 0,
             }
         },
@@ -278,15 +279,6 @@
                     const recalculatedInnerWidth = document.body.offsetWidth / canvasScaleRatio
                     const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio
 
-                    // if (!values.rectStartY) {
-                    //     // values.rectStartY = objs.canvas.getBoundingClientRect().top
-                    //     values.rectStartY = objs.canvas.offsetTop + (objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2
-                    //     values.rect1X[2].start = (window.innerHeight / 2) / scrollHeight
-                    //     values.rect2X[2].start = (window.innerHeight / 2) / scrollHeight
-                    //     values.rect1X[2].end = values.rectStartY / scrollHeight
-                    //     values.rect2X[2].end = values.rectStartY / scrollHeight
-                    // }
-
                     const whiteRectWidth = recalculatedInnerWidth * 0.15
                     values.rect1X[0] = (objs.canvas.width - recalculatedInnerWidth) / 2
                     values.rect1X[1] = values.rect1X[0] - whiteRectWidth
@@ -295,8 +287,6 @@
 
                     objs.context.fillRect(parseInt(values.rect1X[0]), 0, parseInt(whiteRectWidth), objs.canvas.height)
                     objs.context.fillRect(parseInt(values.rect2X[0]), 0, parseInt(whiteRectWidth), objs.canvas.height)
-                    // objs.context.fillRect(parseInt(calcValues(values.rect1X, currentYOffset)), 0, parseInt(whiteRectWidth), objs.canvas.height)
-                    // objs.context.fillRect(parseInt(calcValues(values.rect2X, currentYOffset)), 0, parseInt(whiteRectWidth), objs.canvas.height)
                 }
                 break
             case 3:
@@ -342,6 +332,7 @@
                 } else {
                     step = 2
                     // console.log('캔버스 닿기 후')
+                    objs.context.drawImage(objs.images[1], 0, 200)
                     objs.canvas.classList.add('sticky')
                     objs.canvas.style.top = `${-(objs.canvas.height - objs.canvas.height * canvasScaleRatio) / 2}px`
                 }
