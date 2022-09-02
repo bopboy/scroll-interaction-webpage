@@ -74,6 +74,7 @@ a {
 /* 섹션 공통 */
 
 .scroll-section {
+    position: relative;
     padding-top: 50vh;
     /* border: 3px solid red; */
 }
