@@ -408,8 +408,6 @@
                 const currentYOffset = delayedYOffset - prevScrollHeight
                 const objs = sceneInfo[currentScene].objs
                 const values = sceneInfo[currentScene].values
-                // if (currentScene === 0) {
-                console.log('loop')
                 let sequence = Math.round(calcValues(values.imageSequence, currentYOffset))
                 if (objs.videoImages[sequence])
                     objs.context.drawImage(objs.videoImages[sequence], 0, 0)
@@ -427,6 +425,18 @@
         setLayout()
         sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0)
 
+        let tempYOffset = yOffset
+        let tempScrollCount = 0
+        if (yOffset > 0) {
+            let siId = setInterval(() => {
+                window.scrollTo(0, tempYOffset)
+                tempYOffset += 5
+
+                // console.log(tempScrollCount++)
+                if (tempScrollCount > 20) clearInterval(siId)
+                tempScrollCount++
+            }, 20)
+        }
         window.addEventListener('scroll', () => {
             yOffset = window.pageYOffset
             scrollLoop()
