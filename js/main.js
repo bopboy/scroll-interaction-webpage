@@ -44,7 +44,8 @@
                 messageB_translateY_out: [0, -20, { start: 0.45, end: 0.5 }],
                 messageC_translateY_out: [0, -20, { start: 0.65, end: 0.7 }],
                 messageD_translateY_out: [0, -20, { start: 0.85, end: 0.9 }],
-            }
+            },
+            finishedLoadingImages: false
         },
         {
             // 1
@@ -94,7 +95,8 @@
                 pinC_opacity_in: [0, 1, { start: 0.72, end: 0.77 }],
                 pinB_opacity_out: [1, 0, { start: 0.58, end: 0.63 }],
                 pinC_opacity_out: [1, 0, { start: 0.85, end: 0.9 }],
-            }
+            },
+            finishedLoadingImages: false
         },
         {
             // 3
@@ -400,6 +402,119 @@
         if (enterNewScene) return
         playAnimation()
     }
+
+    // 캔버스 이미지 로드
+
+    let totalImages = 0;
+    const scene0Images = [];
+    const scene2Images = [];
+
+    // Scene 0 이미지 로드
+    function loadImagesOfScene0() {
+        if (sceneInfo[0].finishedLoadingImages) return;
+
+        let numberOfLoadedImages = 0;
+        for (let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
+            let imgElem = new Image();
+            imgElem.src = `./video/001/IMG_${6726 + i}.JPG`;
+            imgElem.addEventListener('load', () => {
+                scene0Images.push(imgElem);
+                numberOfLoadedImages++;
+
+                totalImages++;
+
+                if (numberOfLoadedImages === sceneInfo[0].values.videoImageCount) {
+                    // 해당 씬의 이미지가 모두 로드되었으면
+                    sceneInfo[0].finishedLoadingImages = true;
+                    console.log(`scene 0 이미지 로드 완료`)
+                    console.log(`로드된 이미지 총개수: ${totalImages}`);
+                    setImagesOfScene0();
+                    initAfterLoadImages();
+
+                    if (!sceneInfo[2].finishedLoadingImages) {
+                        loadImagesOfScene2();
+                    }
+                }
+            });
+        }
+    }
+
+    // Scene 2 이미지 로드
+    function loadImagesOfScene2() {
+        if (sceneInfo[2].finishedLoadingImages) return;
+
+        let numberOfLoadedImages = 0;
+        for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
+            let imgElem = new Image();
+            imgElem.src = `./video/002/IMG_${7027 + i}.JPG`;
+            imgElem.addEventListener('load', () => {
+                scene2Images.push(imgElem);
+                numberOfLoadedImages++;
+
+                totalImages++;
+
+                if (numberOfLoadedImages === sceneInfo[2].values.videoImageCount) {
+                    // 해당 씬의 이미지가 모두 로도되었으면
+                    sceneInfo[2].finishedLoadingImages = true;
+                    console.log(`scene 2 이미지 로드 완료`)
+                    console.log(`로드된 이미지 총개수: ${totalImages}`);
+                    setImagesOfScene2();
+                    initAfterLoadImages();
+
+                    if (!sceneInfo[0].finishedLoadingImages) {
+                        loadImagesOfScene0();
+                    }
+                }
+            });
+        }
+    }
+
+    function getImageNumber(str) {
+        const newStr = str.substring(
+            str.lastIndexOf("_") + 1,
+            str.lastIndexOf(".")
+        );
+        return newStr * 1;
+    }
+
+    // 이미지가 로드되는 순서는 이미지 번호 순으로 보장이 안되기 때문에 정렬 함수로 번호순 정렬이 필요
+    function sortImages(imageArray) {
+        let temp;
+        let imageNumber1;
+        let imageNumber2;
+        for (let i = 0; i < imageArray.length; i++) {
+            for (let j = 0; j < imageArray.length - i; j++) {
+                if (j < imageArray.length - 1) {
+                    imageNumber1 = getImageNumber(imageArray[j].currentSrc);
+                    imageNumber2 = getImageNumber(imageArray[j + 1].currentSrc);
+                    if (imageNumber1 > imageNumber2) {
+                        temp = imageArray[j];
+                        imageArray[j] = imageArray[j + 1];
+                        imageArray[j + 1] = temp;
+                    }
+                }
+            }
+        }
+    }
+
+    function setImagesOfScene0() {
+        // Scene 0에 쓰이는 scene0Images 이미지 배열을 번호순 정렬 후
+        // sceneInfo[0].objs.videoImages 배열에 저장
+        sortImages(scene0Images);
+        for (let i = 0; i < scene0Images.length; i++) {
+            sceneInfo[0].objs.videoImages.push(scene0Images[i]);
+        }
+    }
+
+    function setImagesOfScene2() {
+        // Scene 2에 쓰이는 scene2Images 이미지 배열을 번호순 정렬 후
+        // sceneInfo[2].objs.videoImages 배열에 저장
+        sortImages(scene2Images);
+        for (let i = 0; i < scene2Images.length; i++) {
+            sceneInfo[2].objs.videoImages.push(scene2Images[i]);
+        }
+    }
+
     function checkMenu() {
         if (yOffset > 44) {
             document.body.classList.add('local-nav-sticky')
@@ -425,23 +540,53 @@
             rafState = false
         }
     }
-    // window.addEventListener('DOMContentLoaded', setLayout)
-    window.addEventListener('load', () => {
+    function initAfterLoadImages() {
+        if (
+            currentScene !== 2 &&
+            sceneInfo[0].objs.videoImages[0]
+        ) {
+            sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0);
+        }
+
+        // 중간에서 새로고침 했을 경우 자동 스크롤로 제대로 그려주기
+        let tempYOffset = yOffset;
+        let tempScrollCount = 0;
+        if (tempYOffset > 0) {
+            let siId = setInterval(() => {
+                scrollTo(0, tempYOffset);
+                tempYOffset += 5;
+
+                if (tempScrollCount > 20) {
+                    clearInterval(siId);
+                }
+                tempScrollCount++;
+            }, 20);
+        }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        console.log('DOMContentLoaded')
+        setLayout()
+        // window.addEventListener('load', () => {
         document.body.classList.remove('before-load')
         setLayout()
         sceneInfo[0].objs.context.drawImage(sceneInfo[0].objs.videoImages[0], 0, 0)
 
-        let tempYOffset = yOffset
-        let tempScrollCount = 0
-        if (yOffset > 0) {
-            let siId = setInterval(() => {
-                window.scrollTo(0, tempYOffset)
-                tempYOffset += 5
+        // Scene 3 이미지블렌드 캔버스에 쓰는 이미지 세팅
+        let imgElem;
+        for (let i = 0; i < sceneInfo[3].objs.imagesPath.length; i++) {
+            imgElem = new Image();
+            imgElem.src = sceneInfo[3].objs.imagesPath[i];
+            sceneInfo[3].objs.images.push(imgElem);
+        }
 
-                // console.log(tempScrollCount++)
-                if (tempScrollCount > 20) clearInterval(siId)
-                tempScrollCount++
-            }, 20)
+        console.log('loadImages 호출');
+        if (currentScene !== 2) {
+            // 0번, 첫번째 씬의 이미지를 로드
+            loadImagesOfScene0();
+        } else {
+            // 2번, 세번째 씬의 이미지를 로드
+            loadImagesOfScene2();
         }
         window.addEventListener('scroll', () => {
             yOffset = window.pageYOffset
